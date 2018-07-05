@@ -82,7 +82,7 @@ nodeInfo.floor.addEventListener('change', function(evt){
 nodeInfo.class.addEventListener('change',function(evt){
     if(selectedNode != null){
         for(var i of selectedNode){
-            nodes[i] = nodeInfo.class.value;
+            nodes[i].class = nodeInfo.class.value;
         }
     }
 },false);
@@ -116,7 +116,6 @@ canvas.addEventListener('mousedown', function(evt){
         }
     }
 }, false);
-//MouseMove triggers an event when mouse is moved, but will only be used while dragging
 canvas.addEventListener('mousemove', function(evt){
     coors = getMousePos(evt,canvas);
     if(screenBeingDragged){
@@ -128,7 +127,6 @@ canvas.addEventListener('mousemove', function(evt){
     }
 
 }, false)
-//MouseUp turns off the dragging variable, dropping the shape
 canvas.addEventListener('mouseup', function(evt){
     if(selectedNode != null){updateSelectedNode(selectedNode)};
     screenBeingDragged = false;
@@ -256,7 +254,6 @@ document.getElementById("imageFile").addEventListener('change',function(evt){
     backgroundImage = document.createElement("img");
     backgroundImage.src = window.URL.createObjectURL(document.getElementById("imageFile").files[0]);
 },false);
-//The jquery keycode inputs
 $(document).keydown(function(e) {
     if (document.activeElement.tagName!="INPUT"){
     switch(e.which){
@@ -292,7 +289,6 @@ $(document).keydown(function(e) {
     e.preventDefault(); // prevent the default action (scroll / move caret)
     }
 });
-
 function updateSelectedNode(index){
     selectedNode = index;
     document.getElementById("selected").innerHTML = index.length;
@@ -312,6 +308,10 @@ function updateSelectedNode(index){
         }
         if(dif){
             nodeInfo[prop][dProp] = "~";
+            if(prop =='type'){
+                nodeInfo.class.parentNode.style.display = "none";
+                nodeInfo.floor.parentNode.style.display = "none";
+            }
         }
         else{
             nodeInfo[prop][dProp] = val;

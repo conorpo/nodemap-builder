@@ -17,7 +17,6 @@ var floor = 1;
 var saveTemp;
 var selectionBox={one:0,two:0,vis:false};
 var saveStr;
-
 function init(){
     document.getElementById("defaultOpen").click();
     canvas.width = 1600;
