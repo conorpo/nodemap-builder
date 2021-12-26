@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <style>
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Nodemap Creation Tool</title>
+  </head>
+  <body onload="init()">
+    <div class="tabs">
+      <div class="tab">
+        <button class="tablinks" onclick="switchTab(event, 'directory',0)" id="defaultOpen">Directory Setup</button>
+        <button class="tablinks" onclick="switchTab(event, 'nodes',1)">Node Setup</button>
+        <button class="tablinks" onclick="switchTab(event, 'export',0)">Export/Import</button>
+      </div>
+      <div id="directory" class="tabcontent">
+          <h1>Classrooms:</h1>
+          <div id="classes">
+          </div>
+          <input type="text" id="classroom">
+          <button type="button" id="namesubmit" class="submit" onclick="addNewClass()">Add New Class</button>
+      </div>
+      <div id="nodes" class="tabcontent">
+          <div id="nodetabs" class="tabs">
+              <div id="nodetab" class="tab">
+                  <button class="tablinks" onclick="switchTab(event, 'node-info',2)">Node Editor</button>
+                  <button class="tablinks" onclick="switchTab(event, 'grid-info',2)">Grid Settings</button>
+              </div>
+              <div id="grid-info" class="tabcontent">
+                <input id="grids" type="checkbox">
+                <label for="grids"> Enable Grid</label>
+                <input id="gridText" type="checkbox">
+                 <label for="gridText">Enable Grid Text</label>
+                <br><br>
+                <input id="backGround" type="checkbox">
+                <label for="backGround">
+                  <b>Background: </b>
+                  <input id="imageFile"type="file" multiple=false>
+                  <input class = "imageP "id="imageScale" type="number" step = 0.01 value = 1 min = 0.05 max = 20>
+                  <input class = "imageP "id="imageOpacity" type="number" step = 0.01 value = 0.5 min = 0 max = 1>
+                </label>
+                <br><br>
+                <input type="checkbox" id="gridsnap"> <label for="gridsnap">Enable Grid Snapping</label>
+                <br><br>
+                <input type="number" id="floors" value="1" min=1 max=10> <label for="floors"># of Floors</label>
+              </div>
+              <div id="node-info" class="tabcontent">
+                  <h2>Currently you are&nbsp;</h2>
+                  <select id="nodeInteraction" class = "bigSelect">
+                    <option>Placing Nodes</option>
+                    <option>Making Connections</option>
+                    <option>Deleting Elements</option>
+                  </select>
+                  <div class="clearfix"></div>
+                  <h2>and on floor:&nbsp;</h2>
+                  <input type="number" id="floor" value="1" onchange="changeFloor()">
+                  <div class="clearfix"></div>
+                  <br>
+                  <h1 style="margin-bottom:0;">Node Info</h1>
+                  <h4 style="margin-top:0;">Selecting <span id="selected">1</span> node(s)</h4>
+                  <div class="clearfix"></div>
+                  <div style = "display:none;">
+                      <select id="node-class">
+                      </select> <label for="node-class">Node Classroom</label> <br> <br>
+                  </div>
+                  <input type="color" id="node-color" value="#e66465">
+                  <label for="node-color">Node Color</label> <br>
+                  <input type="number" id="node-radius" value=10>
+                  <label for="node-radius">Node Radius</label> <br>
+                  <input type="number" id="node-x" value=0>
+                  <label for="node-x">X Value</label> <br>
+                  <input type="number" id="node-y" value=0>
+                  <label for="node-y">Y Value</label> <br>
+                  <input type="text" id="node-name" value="New Node">
+                  <label for="node-name">Node Name</label> <br>
+                  <div>
+                      <input type="number" id="node-floor" value="1">
+                      <label for="node-floor">Node Floor</label> <br>
+                  </div>
+                  <select id="node-type">
+                      <option>Default</option>
+                      <option>Classroom</option>
+                      <option>Staircase</option>
+                  </select>
+                  <label for="node-type">Node Type</label>
+              </div>
+          </div>
+      </div>
+      <div id="export" class="tabcontent">
+          <div class="saveLoad">
+              <button onclick="save(true)">Save</button>
+              <button onclick="load(true)">Load</button>
+          </div>
+          <div class="clearfix"></div>
+          <div class="saveLoad">
+              <button onclick="save(false)">Export</button>
+              <input type="text" id="fileName" value="myFile">
+              <a href="#" id=link style="display:none;">Download!</a>
+              <button  id="import"  onclick="load(false)">Import</button>
+              <input onchange="preload()"type="file" id="projectFile">
+          </div>
+          <div class="clearfix"></div>
+          <h2 style="margin:0; margin-left:10;">Text Preview&nbsp;</h2>
+          <span style="line-height:30px;" id="textSize"></span>
+          <button style="margin-top:3px; float:right; margin-right:40px;"onclick="exportPreview()">Refresh</button>
+          <div class="clearfix"></div>
+          <p id="textPreview">H</p>
+      </div>
+    </div>
+    <canvas id = "canvas" class = 'animation'></canvas>
+  </body>
+  <script src="js/main.js"></script>
+  <script src="js/directory.js"></script>
+  <script src="js/dom.js"></script>
+</html>
